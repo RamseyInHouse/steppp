@@ -1,0 +1,26 @@
+{
+  "name": "steppp",
+  "version": "0.0.1",
+  "main": "dist/steppp.umd.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview",
+    "test": "jest src", 
+    "prettier": "prettier --write \"**/*.{md,ts,js}\""
+  },
+  "devDependencies": {
+    "@testing-library/dom": "^8.7.1",
+    "@testing-library/jest-dom": "^5.14.1",
+    "@types/jest": "^27.0.2",
+    "jest": "^27.2.4",
+    "prettier": "2.7.1",
+    "terser": "5.14.2",
+    "typescript": "^4.3.2",
+    "vite": "^2.6.0"
+  },
+  "dependencies": {
+    "@babel/preset-env": "^7.15.6",
+    "@babel/preset-typescript": "^7.15.0"
+  }
+}
