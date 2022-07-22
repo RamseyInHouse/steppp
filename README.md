@@ -116,10 +116,3 @@ These are the events you can hook into:
 | steppp:start    | This event fires when a step transition starts.                                                    |
 | steppp:complete | This event fires when a step transition completes.                                                 |
 
-## Development
-
-### To Do:
-
-- custom animation options
-- allow different types of animations
->>>>>>> e32f968 (Port over all files.)
