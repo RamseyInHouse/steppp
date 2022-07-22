@@ -2,6 +2,7 @@
   "name": "steppp",
   "version": "0.0.1",
   "main": "dist/steppp.umd.js",
+  "module": "dist/steppp.es.js",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
