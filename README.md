@@ -20,7 +20,7 @@ Define steps in your HTML and set an `data-steppp-active` attribute on the initi
 
 ```html
 <div id="steppp">
-  <div data-stepppp-wrapper>
+  <div data-steppp-wrapper>
     <section data-steppp-active>first</section>
     <section>second</section>
     <section>third</section>
@@ -66,7 +66,7 @@ Attach `data-steppp-forward` and `data-steppp-backward` attributes to elements i
 
 ```html
 <div id="steppp">
-  <div data-stepppp-wrapper>
+  <div data-steppp-wrapper>
     <section data-steppp-active>first</section>
     <!-- ...other steps -->
   </div>
@@ -80,7 +80,7 @@ You can also specify step names to jump directly from one step to another regard
 
 ```html
 <div id="steppp">
-  <div data-stepppp-wrapper>
+  <div data-steppp-wrapper>
     <section data-steppp-active>
       some step
       <button data-steppp-to="third_step">Go to Step</button>
