@@ -8,6 +8,7 @@ export default defineConfig({
       entry: path.resolve(__dirname, "src/index.ts"),
       name: "Steppp",
       fileName: (format) => `steppp.${format}.js`,
+      formats: ['es', 'umd']
     },
   },
 });

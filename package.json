@@ -1,13 +1,13 @@
 {
   "name": "steppp",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "main": "dist/steppp.umd.js",
   "module": "dist/steppp.es.js",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "serve": "vite preview",
-    "test": "jest src", 
+    "test": "jest src",
     "prettier": "prettier --write \"**/*.{md,ts,js}\""
   },
   "devDependencies": {
