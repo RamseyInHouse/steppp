@@ -1,5 +1,5 @@
 {
-  "name": "steppp",
+  "name": "@ramseyinhouse/steppp",
   "version": "0.0.2",
   "main": "dist/steppp.umd.js",
   "module": "dist/steppp.es.js",
