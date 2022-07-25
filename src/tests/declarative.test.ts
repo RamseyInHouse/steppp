@@ -1,8 +1,6 @@
-import "@testing-library/jest-dom";
 import { getByText } from "@testing-library/dom";
 import { getEl, getBody } from "./test-helpers";
 import Steppp from "../index";
-import * as utils from "../utils";
 
 beforeEach(() => {
   document.body.innerHTML = `
@@ -18,7 +16,7 @@ beforeEach(() => {
         <button data-steppp-backward>
           backward
         </button>
-    
+
         <button data-steppp-forward>
           forward
         </button>
@@ -36,7 +34,7 @@ it("moves forward.", (done) => {
   getByText(getBody(), "forward").click();
 
   getEl().addEventListener("steppp:complete", () => {
-    expect(getByText(getBody(), "2")).toHaveAttribute("data-steppp-active", "");
+    expect(getByText(getBody(), "2").dataset.stepppActive).toEqual("");
     done();
   });
 });
@@ -48,7 +46,7 @@ it("moves backward", (done) => {
   getByText(getBody(), "backward").click();
 
   getEl().addEventListener("steppp:complete", () => {
-    expect(getByText(getEl(), "3")).toHaveAttribute("data-steppp-active", "");
+    expect(getByText(getEl(), "3").dataset.stepppActive).toEqual("");
     done();
   });
 });
@@ -57,7 +55,7 @@ it("moves to specific named step", (done) => {
   getByText(getBody(), "move to step #3").click();
 
   getEl().addEventListener("steppp:complete", () => {
-    expect(getByText(getEl(), "3")).toHaveAttribute("data-steppp-active", "");
+    expect(getByText(getEl(), "3").dataset.stepppActive).toEqual("");
     done();
   });
 });
