@@ -18,7 +18,3 @@ export type Options = {
 };
 
 export type StepMovementArgs = { stepName?: string; direction?: Direction };
-export type CommittableAnimation = Animation & {
-  commitStyles: () => any;
-  persist: () => any;
-};

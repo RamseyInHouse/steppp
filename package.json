@@ -7,22 +7,24 @@
     "dev": "vite",
     "build": "vite build",
     "serve": "vite preview",
-    "test": "jest src",
-    "prettier": "prettier --write \"**/*.{md,ts,js}\""
+    "test": "vitest run",
+    "prettier": "prettier --write \"**/*.{js,ts,css,md}\"",
+    "prepare": "husky install"
   },
   "devDependencies": {
     "@testing-library/dom": "^8.7.1",
-    "@testing-library/jest-dom": "^5.14.1",
-    "@types/jest": "^28.1.6",
+    "@types/web-animations-js": "^2.2.12",
+    "husky": ">=6",
     "jest": "^28.1.3",
-    "jest-environment-jsdom": "^28.1.3",
+    "jsdom": "^20.0.0",
+    "lint-staged": ">=10",
     "prettier": "2.7.1",
     "terser": "5.14.2",
     "typescript": "^4.3.2",
-    "vite": "^3.0.2"
+    "vite": "^3.0.3",
+    "vitest": "^0.19.1"
   },
-  "dependencies": {
-    "@babel/preset-env": "^7.15.6",
-    "@babel/preset-typescript": "^7.15.0"
+  "lint-staged": {
+    "*.{js,ts,css,md}": "prettier --write"
   }
 }

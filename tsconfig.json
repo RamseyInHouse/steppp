@@ -15,7 +15,7 @@
     "noImplicitReturns": true,
     "types": [
       "vite/client",
-      "@types/jest"
+      "vitest/globals"
     ]
   },
   "include": [

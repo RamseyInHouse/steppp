@@ -1,4 +1,4 @@
-import { BuildAnimationArgs, CommittableAnimation, Direction } from "./types";
+import { BuildAnimationArgs, Direction } from "./types";
 
 const defaults: KeyframeAnimationOptions = {
   easing: "ease",
@@ -10,11 +10,11 @@ export const buildAnimation = ({
   frames,
   targetElement,
   timingOptions = {},
-}: BuildAnimationArgs) => {
+}: BuildAnimationArgs): Animation => {
   return targetElement.animate(frames, {
     ...defaults,
     ...timingOptions,
-  }) as CommittableAnimation;
+  });
 };
 
 export const getHeight = (element: HTMLElement): number => {

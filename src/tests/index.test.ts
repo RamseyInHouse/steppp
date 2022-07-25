@@ -1,5 +1,4 @@
-import "@testing-library/jest-dom";
-import { getEl, getBody } from "./test-helpers";
+import { getEl } from "./test-helpers";
 import Steppp from "../index";
 import * as utils from "../utils";
 
@@ -19,43 +18,45 @@ beforeEach(() => {
   `;
 });
 
-it("Default animations are used.", (done) => {
-  const buildAnimationSpy = jest
-    .spyOn(utils, "buildAnimation")
-    .mockImplementation(() => {
-      return {
-        finished: Promise.resolve(true),
-        commitStyles() {},
-        persist() {},
-      };
+it("Default animations are used.", (): Promise<void> =>
+  new Promise((done) => {
+    const buildAnimationSpy = vi
+      .spyOn(utils, "buildAnimation")
+      .mockImplementation(() => {
+        return {
+          finished: Promise.resolve({} as Animation),
+          commitStyles() {},
+          persist() {},
+        } as Animation;
+      });
+
+    const { forward } = Steppp(getEl());
+
+    forward();
+
+    getEl().addEventListener("steppp:complete", () => {
+      const frames = buildAnimationSpy.mock.calls[0][0].frames;
+
+      expect(frames).toEqual(
+        expect.arrayContaining([
+          { transform: "translateX(0)" },
+          { transform: "translateX(-100%)" },
+        ])
+      );
+
+      done();
     });
-
-  const { forward } = Steppp(getEl());
-
-  forward();
-
-  getEl().addEventListener("steppp:complete", () => {
-    const frames = buildAnimationSpy.mock.calls[0][0].frames;
-
-    expect(frames).toEqual(
-      expect.arrayContaining([
-        { transform: "translateX(0)" },
-        { transform: "translateX(-100%)" },
-      ])
-    );
-    done();
-  });
-});
+  }));
 
 it("Custom animations are used.", (done) => {
-  const buildAnimationSpy = jest
+  const buildAnimationSpy = vi
     .spyOn(utils, "buildAnimation")
     .mockImplementation(() => {
       return {
-        finished: Promise.resolve(true),
+        finished: Promise.resolve({} as Animation),
         commitStyles() {},
         persist() {},
-      };
+      } as Animation;
     });
 
   const { forward } = Steppp(getEl(), {
@@ -81,15 +82,11 @@ it("Custom animations are used.", (done) => {
 });
 
 it("Sets up resize listeners for the active step.", () => {
-  const observeMock = jest.fn();
-  const unobserveMock = jest.fn();
+  const observeMock = vi.fn();
+  const unobserveMock = vi.fn();
 
-  window.ResizeObserver = function () {
-    return {
-      observe: observeMock,
-      unobserve: unobserveMock,
-    };
-  };
+  global.ResizeObserver.prototype.observe = observeMock;
+  global.ResizeObserver.prototype.unobserve = unobserveMock;
 
   Steppp(getEl());
 
@@ -99,7 +96,7 @@ it("Sets up resize listeners for the active step.", () => {
 });
 
 // it("Handles custom enter/exit animations.", () => {
-//     const buildAnimationSpy = jest.spyOn(utils, 'buildAnimation').mockImplementation(() => {
+//     const buildAnimationSpy = vi.spyOn(utils, 'buildAnimation').mockImplementation(() => {
 //         return {
 //             finished: Promise.resolve(true),
 //             commitStyles() {},

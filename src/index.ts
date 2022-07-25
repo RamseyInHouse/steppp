@@ -1,11 +1,4 @@
-import {
-  Options,
-  StepMovementArgs,
-  CommittableAnimation,
-  Frame,
-  FrameDef,
-  Direction,
-} from "./types";
+import { Options, StepMovementArgs, Frame, FrameDef, Direction } from "./types";
 import {
   buildAnimation,
   getHeight,
@@ -140,7 +133,7 @@ function Steppp(element: HTMLElement, options: any = defaultOptions) {
 
           await Promise.all(currentAnimations.map((a) => a.finished));
 
-          currentAnimations.forEach((a: CommittableAnimation) => {
+          currentAnimations.forEach((a: Animation) => {
             a.commitStyles();
             a.persist();
           });
@@ -219,7 +212,7 @@ function Steppp(element: HTMLElement, options: any = defaultOptions) {
 
   const animationFrames: FrameDef = computeAnimationFrames(options.frames);
 
-  let currentAnimations: CommittableAnimation[] = [];
+  let currentAnimations: Animation[] = [];
 
   getStep().style.position = "absolute";
   const currentStepHeight = getHeight(getStep());

@@ -115,4 +115,3 @@ These are the events you can hook into:
 | steppp:abort    | This event fires when a step transition fails to start because the next step cannot be determined. |
 | steppp:start    | This event fires when a step transition starts.                                                    |
 | steppp:complete | This event fires when a step transition completes.                                                 |
-
