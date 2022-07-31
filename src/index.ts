@@ -95,6 +95,7 @@ function Steppp(element: HTMLElement, options: any = defaultOptions) {
         const newActiveStep =
           getStepByName(stepName) ||
           getStep(getActiveStepIndex() + fallbackIncrementor);
+
         const eventArgs = {
           oldStep: oldActiveStep,
           newStep: newActiveStep,
@@ -215,7 +216,9 @@ function Steppp(element: HTMLElement, options: any = defaultOptions) {
   let currentAnimations: Animation[] = [];
 
   getStep().style.position = "absolute";
+
   const currentStepHeight = getHeight(getStep());
+
   stepWrapper.style.height = `${currentStepHeight}px`;
 
   let currentWrapperHeight = currentStepHeight;
@@ -232,6 +235,7 @@ function Steppp(element: HTMLElement, options: any = defaultOptions) {
 
   element.querySelectorAll("[data-steppp-to]").forEach((el) => {
     el.addEventListener("click", () => {
+      console.log((el as HTMLElement).dataset.stepppTo);
       moveTo((el as HTMLElement).dataset.stepppTo || "");
     });
   });

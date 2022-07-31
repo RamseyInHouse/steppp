@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism-okaidia.min.css"
+    />
+    <title>Steppp | Easy, lightweight multi-step experiences.</title>
+
+    <style>
+      #steppp {
+        position: relative;
+      }
+
+      .step {
+        position: absolute;
+        display: none;
+        left: 0;
+      }
+
+      [data-steppp-active] {
+        display: block;
+      }
+
+      [data-steppp-wrapper] {
+        position: relative;
+        overflow: hidden;
+      }
+    </style>
+    <link rel="stylesheet" href="./style.css">
+  </head>
+  <body class="bg-white pb-10">
+    <div class="p-3 sm:p-8 bg-gray-10 mb-3">
+      <div class="text-center">
+        <h1 class="text-8 font-semibold mb-1">steppp</h1>
+        <p>easy, lightweight multi-step experiences.</p>
+
+        <ul class="list-none p-0 flex gap-md justify-center flex-wrap mb-6">
+          <li>
+            <a
+              href="https://bundlephobia.com/package/@ramseyinhouse/steppp"
+              target="_blank"
+            >
+              <img
+                src="https://badgen.net/bundlephobia/minzip/@ramseyinhouse/steppp"
+                alt="Steppp's gzipped bundle size"
+              />
+            </a>
+          </li>
+
+          <li>
+            <a
+              href="https://github.com/RamseyInHouse/steppp/blob/master/LICENSE"
+              target="_blank"
+            >
+              <img
+                src="https://badgen.net/github/license/ramseyinhouse/steppp"
+                alt="Steppp's license"
+              />
+            </a>
+          </li>
+
+          <li>
+            <a href="https://github.com/ramseyinhouse/steppp" target="_blank">
+              <img
+                src="https://badgen.net/github/stars/ramseyinhouse/steppp"
+                alt="Steppp's GitHub stars"
+              />
+            </a>
+          </li>
+        </ul>
+
+        <div class="max-w-xl mx-auto">
+          <p>
+            Steppp is a small library for quickly creating multi-step forms,
+            user-triggered carousels, and other experiences. It emphasizes a
+            flexible developer experience and a small bundle footprint.
+          </p>
+
+          <a
+            href="https://github.com/ramseyinhouse/steppp#readme"
+            class="gzl-Button gzl-Button--borderless"
+            target="_blank"
+          >
+            Head Straight to the Docs
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="max-w-2xl mx-auto p-3 sm:p-8">
+      <div class="mb-10">
+        <h2 class="text-center text-5">A Simple, Progressive Example</h2>
+        <p class="text-center">
+          Use Steppp to build a simple multi-step experience with a predictable,
+          linear flow.
+        </p>
+
+        <div id="steppp1">
+          <div data-steppp-wrapper class="mb-2">
+            <section class="step" data-steppp-active>
+              <div class="step-content-wrapper">
+                <h3 class="step-heading">Step #1</h3>
+
+                <p class="text-gray-70">
+                  With
+                  <a
+                    target="_blank"
+                    href="https://github.com/RamseyInHouse/steppp#moving-from-step-to-step"
+                    >two API approaches</a
+                  >, Steppp allows you to quickly spin up multi-step forms,
+                  carousels, and other experiences with ease and a lightweight
+                  footprint.
+                </p>
+              </div>
+            </section>
+            <section class="step">
+              <div class="step-content-wrapper">
+                <h3 class="step-heading">Step #2</h3>
+
+                <div class="gzl-FormField">
+                  <label class="gzl-FormField-label"> A Sample Field </label>
+                  <div class="gzl-FormField-control gzl-FormField-control--m">
+                    <div class="gzl-Input">
+                      <input type="text" />
+                    </div>
+                  </div>
+                </div>
+
+                <div class="gzl-FormField">
+                  <label class="gzl-FormField-label">
+                    Another Sample Field
+                  </label>
+                  <div class="gzl-FormField-control gzl-FormField-control--l">
+                    <div class="gzl-Input">
+                      <input type="text" />
+                    </div>
+                  </div>
+                </div>
+
+                <div class="gzl-FormField">
+                  <label class="gzl-FormField-label"> One More Field </label>
+                  <div class="gzl-FormField-control gzl-FormField-control--s">
+                    <div class="gzl-Input">
+                      <input type="email" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+            <section class="step">
+              <div class="step-content-wrapper">
+                <h3 class="step-heading">Step #3</h3>
+
+                <div class="gzl-FormField">
+                  <label class="gzl-FormField-label"> A Sample Textarea </label>
+                  <div class="gzl-FormField-control">
+                    <div class="gzl-Textarea">
+                      <textarea></textarea>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+            <section class="step">
+              <div class="step-content-wrapper">
+                <h3 class="step-heading">Thank You!</h3>
+              </div>
+            </section>
+          </div>
+
+          <div class="flex justify-center gap-lg">
+            <button
+              id="backward"
+              data-steppp-backward
+              class="gzl-Button gzl-Button--borderless"
+            >
+              backward
+            </button>
+            <button
+              id="next"
+              data-steppp-forward
+              class="gzl-Button gzl-Button--borderless"
+            >
+              forward
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <h2 class="text-center text-5">A Non-Linear Example</h2>
+      <p class="text-center">
+        Using either Steppp's declarative or imperative API to take users
+        through a non-linear flow driven by some action.
+      </p>
+
+      <div class="mb-10">
+        <div id="steppp2">
+          <div data-steppp-wrapper class="mb-3">
+            <section class="step" data-steppp-name="step1" data-steppp-active>
+              <div class="step-content-wrapper">
+                <h3 class="step-heading">Step #1</h3>
+
+                <h4 class="text-center">Go to a step:</h4>
+                <ul class="list-none flex p-0 gap-md justify-center">
+                  <li>
+                    <button
+                      class="gzl-Button gzl-Button--ghost"
+                      data-steppp-to="step1"
+                    >
+                      Step #1
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      class="gzl-Button gzl-Button--ghost"
+                      data-steppp-to="step2"
+                    >
+                      Step #2
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      class="gzl-Button gzl-Button--ghost"
+                      data-steppp-to="step3"
+                    >
+                      Step #3
+                    </button>
+                  </li>
+                </ul>
+              </div>
+            </section>
+
+            <section class="step" data-steppp-name="step2">
+              <div class="step-content-wrapper">
+                <h3 class="step-heading">Step #2</h3>
+
+                <h4 class="text-center">Go to a step:</h4>
+                <ul class="list-none flex p-0 gap-md justify-center">
+                  <li>
+                    <button
+                      class="gzl-Button gzl-Button--ghost"
+                      data-steppp-to="step1"
+                    >
+                      Step #1
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      class="gzl-Button gzl-Button--ghost"
+                      data-steppp-to="step2"
+                    >
+                      Step #2
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      class="gzl-Button gzl-Button--ghost"
+                      data-steppp-to="step3"
+                    >
+                      Step #3
+                    </button>
+                  </li>
+                </ul>
+              </div>
+            </section>
+
+            <section class="step" data-steppp-name="step3">
+              <div class="step-content-wrapper">
+                <h3 class="step-heading">Step #3</h3>
+
+                <h4 class="text-center">Go to a step:</h4>
+                <ul class="list-none flex p-0 gap-md justify-center">
+                  <li>
+                    <button
+                      class="gzl-Button gzl-Button--ghost"
+                      data-steppp-to="step1"
+                    >
+                      Step #1
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      class="gzl-Button gzl-Button--ghost"
+                      data-steppp-to="step2"
+                    >
+                      Step #2
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      class="gzl-Button gzl-Button--ghost"
+                      data-steppp-to="step3"
+                    >
+                      Step #3
+                    </button>
+                  </li>
+                </ul>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+
+      <h2 class="text-center text-5">An Example with a Wild Transition</h2>
+      <p class="text-center">
+        Steppp relies on the
+        <a
+          href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Animations_API"
+          target="_blank"
+          >Web Animations API</a
+        >, which means you can take full control of how steps enter and exit.
+      </p>
+
+      <div id="steppp3" class="mb-8">
+        <div data-steppp-wrapper class="mb-2">
+          <section class="step" data-steppp-active>
+            <div class="step-content-wrapper">
+              <h3 class="step-heading">Step #1</h3>
+
+              <p class="text-gray-70">
+                With
+                <a
+                  target="_blank"
+                  href="https://github.com/RamseyInHouse/steppp#moving-from-step-to-step"
+                  >two API approaches</a
+                >, Steppp allows you to quickly spin up multi-step forms,
+                carousels, and other experiences with ease and a lightweight
+                footprint.
+              </p>
+            </div>
+          </section>
+          <section class="step">
+            <div class="step-content-wrapper">
+              <h3 class="step-heading">Step #2</h3>
+
+              <div class="gzl-FormField">
+                <label class="gzl-FormField-label"> A Sample Field </label>
+                <div class="gzl-FormField-control gzl-FormField-control--m">
+                  <div class="gzl-Input">
+                    <input type="text" />
+                  </div>
+                </div>
+              </div>
+
+              <div class="gzl-FormField">
+                <label class="gzl-FormField-label">
+                  Another Sample Field
+                </label>
+                <div class="gzl-FormField-control gzl-FormField-control--l">
+                  <div class="gzl-Input">
+                    <input type="text" />
+                  </div>
+                </div>
+              </div>
+
+              <div class="gzl-FormField">
+                <label class="gzl-FormField-label"> One More Field </label>
+                <div class="gzl-FormField-control gzl-FormField-control--s">
+                  <div class="gzl-Input">
+                    <input type="email" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section class="step">
+            <div class="step-content-wrapper">
+              <h3 class="step-heading">Step #3</h3>
+
+              <div class="gzl-FormField">
+                <label class="gzl-FormField-label"> A Sample Textarea </label>
+                <div class="gzl-FormField-control">
+                  <div class="gzl-Textarea">
+                    <textarea></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section class="step">
+            <div class="step-content-wrapper">
+              <h3 class="step-heading">Thank You!</h3>
+            </div>
+          </section>
+        </div>
+
+        <div class="flex justify-center gap-lg">
+          <button
+            id="backward"
+            data-steppp-backward
+            class="gzl-Button gzl-Button--borderless"
+          >
+            backward
+          </button>
+          <button
+            id="next"
+            data-steppp-forward
+            class="gzl-Button gzl-Button--borderless"
+          >
+            forward
+          </button>
+        </div>
+      </div>
+      <div class="divider"></div>
+    </div>
+
+    <div class="max-w-5xl mx-auto p-3">
+      <h2 class="heading">Two API Approaches</h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-md mb-8">
+        <div>
+          <h2 class="text-5">A Declarative Approach</h2>
+          <p>
+            Attach certain attributes to your markup and write zero JavaScript
+            to get a basic instance up and running.
+          </p>
+          <pre><code class="language-html">&lt;div id=&quot;steppp&quot;&gt;
+  &lt;div data-steppp-wrapper&gt;
+    &lt;section data-steppp-active&gt;first&lt;/section&gt;
+    &lt;section&gt;second&lt;/section&gt;
+    &lt;section&gt;third&lt;/section&gt;
+  &lt;/div&gt;
+
+  &lt;button data-steppp-forward&gt;
+    Forward
+  &lt;/button&gt;
+  &lt;button data-steppp-backward&gt;
+    Backward
+  &lt;/button&gt;
+&lt;/div&gt;
+
+&lt;script src=&quot;path/to/steppp.js&quot;&gt;&lt;/script&gt;
+</code></pre>
+        </div>
+        <div>
+          <h2 class="text-5">An Imperative Approach</h2>
+          <p>
+            For more fine-tuned control, use Steppp's intuitive JavaScript API
+            to set up a multi-step experience.
+          </p>
+          <pre><code class="language-js">// After setting up your markup...
+
+import Steppp from "steppp";
+const element = document.getElementById("targetElement");
+const { forward, backward, moveTo } = Steppp(element);
+
+document.querySelector("#forward").addEventListener("click", () => {
+  forward();
+});
+
+document.querySelector("#backward").addEventListener("click", () => {
+  backward();
+});
+
+document.querySelector("#moveToStepA").addEventListener("click", () => {
+  moveTo("step_a");
+});
+</code></pre>
+        </div>
+      </div>
+
+      <div class="divider mb-6"></div>
+
+      <div class="text-center">
+        <h2 class="heading">Ready to Get Started?</h2>
+
+        <a
+          href="https://github.com/ramseyinhouse/steppp#readme"
+          class="gzl-Button"
+          target="_blank"
+        >
+          Head to the Docs
+        </a>
+      </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script src="https://unpkg.com/@ramseyinhouse/steppp@0.0.3/dist/steppp.umd.js"></script>
+
+    <script type="module">
+      Steppp(document.getElementById("steppp1"), {
+        frames: [{ opacity: "0" }, { opacity: "1" }],
+      });
+
+      Steppp(document.getElementById("steppp2"), {
+        frames: {
+          enter: [{ transform: "translateX(-100%)" }, { transform: "translateX(0)" }],
+          exit: [{ transform: "translateX(0)" }, { transform: "translateX(100%)" }],
+        },
+      });
+
+      Steppp(document.getElementById("steppp3"), {
+        frames: {
+          enter: [
+            { transform: "rotate(0deg)", opacity: 0 },
+            { transform: "rotate(360deg)", opacity: 1 },
+          ],
+          exit: [
+            { transform: "rotate(360deg)", opacity: 1 },
+            { transform: "rotate(0deg)", opacity: 0 },
+          ],
+        },
+      });
+    </script>
+  </body>
+</html>

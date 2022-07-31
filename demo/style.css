@@ -1,0 +1,28 @@
+@import "./rds";
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+* {
+  @apply text-gray-80;
+}
+
+.step {
+  @apply w-full rounded-sm bg-gray-20;
+}
+
+.step-content-wrapper {
+  @apply p-4;
+}
+
+.step-heading {
+  @apply text-center text-6 mb-4;
+}
+
+.divider {
+  @apply h-1 bg-gray-10 w-48 mx-auto;
+}
+
+.heading {
+  @apply text-center text-6 mb-6;
+}
