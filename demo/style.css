@@ -20,7 +20,7 @@
 }
 
 .divider {
-  @apply h-1 bg-gray-10 w-48 mx-auto;
+  @apply h-1 bg-gray-10 w-48 max-w-full mx-auto;
 }
 
 .heading {
