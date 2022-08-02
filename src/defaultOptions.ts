@@ -2,14 +2,7 @@ import { Options } from "./types";
 
 const defaultOptions: Options = {
   stepIsValid: async (_step) => true,
-  frames: [
-    {
-      transform: "translateX(-100%)",
-    },
-    {
-      transform: "translateX(0)",
-    },
-  ],
+  frames: [{ opacity: "0" }, { opacity: "1" }],
 };
 
 export default defaultOptions;

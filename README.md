@@ -1,12 +1,69 @@
 # Steppp
 
-Easy, lightweight multi-step experiences.
+Steppp is a small library for quickly creating multi-step forms, carousels, and other experiences. It emphasizes a flexible developer experience and a small bundle footprint. In fact, this is why "Steppp" has only three "p"s. Any more would've been too much bloat.
+
+<p align="center">
+  <img src="./demo/demo.gif" alt="Steppp demo" />
+</p>
+
+## Getting Started
+
+### Install Steppp
+
+If you're using a package manager, install it:
+
+`yarn add @ramseyinhouse/steppp` or `npm install @ramseyinhouse/steppp`.
+
+Or, you can load it via CDN:
+
+```html
+<script src="https://unpkg.com/@ramseyinhouse/steppp"></script>
+```
+
+### Set Up Base CSS
+
+In order to Steppp to behave correctly, you'll need the following CSS:
+
+```css
+#steppp {
+  position: relative;
+}
+
+.step {
+  display: none;
+  position: absolute;
+  left: 0;
+}
+
+[data-steppp-active] {
+  display: block;
+}
+
+[data-steppp-wrapper] {
+  position: relative;
+  overflow: hidden;
+}
+```
 
 ## Usage
 
-### Setting Up Steps
+### Initialize Steppp
 
-Define steps in your HTML and set an `data-steppp-active` attribute on the initial active step. Steps can be configured in two ways -- either as direct children of a target element:
+To set up a basic instance of Steppp, select an element and pass it to `Steppp`.
+
+```js
+import Steppp from "@ramseyinhouse/steppp";
+
+const element = document.getElementById("targetElement");
+
+Steppp(element);
+```
+
+### Set Up Steps
+
+Steps can be configured in three ways. After choosing an option, be sure to add a `data-steppp-active` attribute to the initial step you'd like to appear.
+
+**As direct children of a target element:**
 
 ```html
 <div id="steppp">
@@ -16,7 +73,7 @@ Define steps in your HTML and set an `data-steppp-active` attribute on the initi
 </div>
 ```
 
-...or within an element with a `data-steppp-wrapper` attached.
+**As direct children within a `data-steppp-wrapper` element:**
 
 ```html
 <div id="steppp">
@@ -28,7 +85,41 @@ Define steps in your HTML and set an `data-steppp-active` attribute on the initi
 </div>
 ```
 
-### Moving From Step to Step
+**As elements that have a predetermined selector:**
+
+```html
+<div id="steppp">
+  <section data-steppp-active class="step">first</section>
+  <form>
+    <section class="step">>second</section>
+    <section class="step">>third</section>
+  </form>
+</div>
+```
+
+When choosing this approach, you'll need to pass the selector to the `stepSelector` option during initialization:
+
+```js
+const element = document.getElementById("targetElement");
+
+Steppp(element, {
+  stepSelector: ".step",
+});
+```
+
+### Consider Naming Your Steps
+
+If your multi-step flow will jump around a bit instead of moving through steps in a linear fashion, you'll need to name your individual steps with a `data-steppp-name` attribute. More on non-linear movement below.
+
+```html
+<div id="steppp">
+  <section data-steppp-name="first_step" data-steppp-active>first</section>
+  <section data-steppp-name="second_step">second</section>
+  <section data-steppp-name="third_step">third</section>
+</div>
+```
+
+### Move From Step to Step
 
 Steppp comes with two API approaches -- an imperative (you dictate when it'll advance in your code) and declarative (behavior is described by setting various `data-steppp-*` attributes).
 
@@ -55,14 +146,7 @@ document.querySelector("#moveToStepA").addEventListener("click", () => {
 
 #### Declarative API
 
-The declarative approach requires you to create a new instance of Steppp like before, and then place specific `data-steppp-*` attributes in your markup. The elements on which these attributes are placed _must_ exist as children to the target element. As such, wrapping your steps within `data-steppp-wrapper` is required using this approach.
-
-```js
-const element = document.getElementById("targetElement");
-Steppp(element);
-```
-
-Attach `data-steppp-forward` and `data-steppp-backward` attributes to elements in order to move those respective directions:
+The declarative approach requires that you place `data-steppp-forward`, `data-steppp-backward` on the elements you'd like to trigger particular movements.
 
 ```html
 <div id="steppp">
@@ -76,7 +160,7 @@ Attach `data-steppp-forward` and `data-steppp-backward` attributes to elements i
 </div>
 ```
 
-You can also specify step names to jump directly from one step to another regardless of their "natural" order:
+You can also tell elements to move Steppp to a particular step when clicked with a `data-steppp-to` attribute.
 
 ```html
 <div id="steppp">
@@ -92,6 +176,39 @@ You can also specify step names to jump directly from one step to another regard
 </div>
 ```
 
+### Customizing the Animation
+
+Steppp relies on the [Web Animations API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Animations_API) to power step transitions. By default, a simple fade is configured by using frames that [change the opacity](https://github.com/RamseyInHouse/steppp/blob/master/src/defaultOptions.ts#L5) of the incoming and outgoing steps.
+
+You can control this animation by passing your own frames. If you simply pass an array of frames, the given order will be applied to the incoming step, and the reverse will be used for the outgoing:
+
+```js
+const element = document.getElementById("targetElement");
+
+Steppp(element, {
+  frames: [{ opacity: "0" }, { opacity: "1" }],
+});
+```
+
+But you can also specify `enter` and `exit` properties for your frames. These will be used on the appropriate step during the respective transition.
+
+```js
+const element = document.getElementById("targetElement");
+
+Steppp(element, {
+  frames: {
+    enter: [
+      { transform: "rotate(0deg)", opacity: 0 },
+      { transform: "rotate(360deg)", opacity: 1 },
+    ],
+    exit: [
+      { transform: "rotate(360deg)", opacity: 1 },
+      { transform: "rotate(0deg)", opacity: 0 },
+    ],
+  },
+});
+```
+
 ### Custom Events
 
 Steppp provides several custom events that you can listen for and hook into.
@@ -101,13 +218,13 @@ const element = document.getElementById("targetElement");
 Steppp(element);
 element.addEventListener("steppp:complete", (event) => {
   const { oldStep, newStep, element } = event.detail;
-  // do something cool now that the step transition is complete
+  // Do something interesting now that the step transition is complete.
 });
 ```
 
 #### Available Events
 
-These are the events you can hook into:
+These are the events available to you:
 
 | Event Name      | Description                                                                                        |
 | --------------- | -------------------------------------------------------------------------------------------------- |
@@ -115,3 +232,9 @@ These are the events you can hook into:
 | steppp:abort    | This event fires when a step transition fails to start because the next step cannot be determined. |
 | steppp:start    | This event fires when a step transition starts.                                                    |
 | steppp:complete | This event fires when a step transition completes.                                                 |
+
+### Try It Out!
+
+There's a demo out on StackBlitz. Tinker as much as you want!
+
+https://stackblitz.com/edit/steppp
