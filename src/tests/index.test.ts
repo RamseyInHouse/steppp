@@ -38,10 +38,7 @@ it("Default animations are used.", (): Promise<void> =>
       const frames = buildAnimationSpy.mock.calls[0][0].frames;
 
       expect(frames).toEqual(
-        expect.arrayContaining([
-          { transform: "translateX(0)" },
-          { transform: "translateX(-100%)" },
-        ])
+        expect.arrayContaining([{ opacity: "0" }, { opacity: "1" }])
       );
 
       done();
