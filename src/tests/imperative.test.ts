@@ -2,6 +2,12 @@ import { getByText } from "@testing-library/dom";
 import { getEl, getBody } from "./test-helpers";
 import Steppp from "../index";
 
+declare global {
+  interface Event {
+    detail: any;
+  }
+}
+
 beforeEach(() => {
   document.body.innerHTML = `
     <div id="steppp">
