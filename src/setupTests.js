@@ -1,4 +1,6 @@
-global.beforeEach(() => {
+import { beforeEach } from "vitest";
+
+beforeEach(() => {
   Element.prototype.animate = (frames, options) => {
     return {
       commitStyles: () => {},
