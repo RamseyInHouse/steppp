@@ -237,4 +237,7 @@ These are the events available to you:
 
 There's a demo out on StackBlitz. Tinker as much as you want!
 
-https://stackblitz.com/edit/steppp
+| Technology | Demo |
+| --- | --- |
+| Vanilla JS | [stackblitz.com/edit/steppp](https://stackblitz.com/edit/steppp) |
+| React | [stackblitz.com/edit/steppp-react-m6oyff](https://stackblitz.com/edit/steppp-react-m6oyff) |
