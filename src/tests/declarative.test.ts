@@ -1,6 +1,7 @@
 import { getByText } from "@testing-library/dom";
 import { getEl, getBody } from "./test-helpers";
 import Steppp from "../index";
+import { beforeEach, it, expect } from "vitest";
 
 beforeEach(() => {
   document.body.innerHTML = `
@@ -30,32 +31,38 @@ beforeEach(() => {
   Steppp(getEl());
 });
 
-it("moves forward.", (done) => {
+it("moves forward.", () => {
   getByText(getBody(), "forward").click();
 
-  getEl().addEventListener("steppp:complete", () => {
-    expect(getByText(getBody(), "2").dataset.stepppActive).toEqual("");
-    done();
+  new Promise<void>((resolve) => {
+    getEl().addEventListener("steppp:complete", () => {
+      expect(getByText(getBody(), "2").dataset.stepppActive).toEqual("");
+      resolve();
+    });
   });
 });
 
-it("moves backward", (done) => {
+it("moves backward", () => {
   getByText(getEl(), "1").removeAttribute("data-steppp-active");
   getByText(getEl(), "4").setAttribute("data-steppp-active", "");
 
   getByText(getBody(), "backward").click();
 
-  getEl().addEventListener("steppp:complete", () => {
-    expect(getByText(getEl(), "3").dataset.stepppActive).toEqual("");
-    done();
+  return new Promise<void>((resolve) => {
+    getEl().addEventListener("steppp:complete", () => {
+      expect(getByText(getEl(), "3").dataset.stepppActive).toEqual("");
+      resolve();
+    });
   });
 });
 
-it("moves to specific named step", (done) => {
+it("moves to specific named step", () => {
   getByText(getBody(), "move to step #3").click();
 
-  getEl().addEventListener("steppp:complete", () => {
-    expect(getByText(getEl(), "3").dataset.stepppActive).toEqual("");
-    done();
+  return new Promise<void>((resolve) => {
+    getEl().addEventListener("steppp:complete", () => {
+      expect(getByText(getEl(), "3").dataset.stepppActive).toEqual("");
+      resolve();
+    });
   });
 });

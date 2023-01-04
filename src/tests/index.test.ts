@@ -1,6 +1,7 @@
 import { getEl } from "./test-helpers";
 import Steppp from "../index";
 import * as utils from "../utils";
+import { beforeEach, it, expect, vi } from "vitest";
 
 beforeEach(() => {
   document.body.innerHTML = `
@@ -45,7 +46,7 @@ it("Default animations are used.", (): Promise<void> =>
     });
   }));
 
-it("Custom animations are used.", (done) => {
+it("Custom animations are used.", () => {
   const buildAnimationSpy = vi
     .spyOn(utils, "buildAnimation")
     .mockImplementation(() => {
@@ -69,12 +70,14 @@ it("Custom animations are used.", (done) => {
 
   forward();
 
-  getEl().addEventListener("steppp:complete", () => {
-    const frames = buildAnimationSpy.mock.calls[0][0].frames;
-    expect(frames).toEqual(
-      expect.arrayContaining([{ opacity: 0 }, { opacity: 1 }])
-    );
-    done();
+  return new Promise<void>((resolve) => {
+    getEl().addEventListener("steppp:complete", () => {
+      const frames = buildAnimationSpy.mock.calls[0][0].frames;
+      expect(frames).toEqual(
+        expect.arrayContaining([{ opacity: 0 }, { opacity: 1 }])
+      );
+      resolve();
+    });
   });
 });
 

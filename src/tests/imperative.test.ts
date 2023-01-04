@@ -1,6 +1,7 @@
 import { getByText } from "@testing-library/dom";
 import { getEl, getBody } from "./test-helpers";
 import Steppp from "../index";
+import { beforeEach, it, expect, describe } from "vitest";
 
 declare global {
   interface Event {
