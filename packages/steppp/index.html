@@ -7,9 +7,9 @@
     <title>Vite App</title>
 
     <style>
-    * {
-      color: white;
-    }
+      * {
+        color: white;
+      }
       #steppp {
         position: relative;
       }
@@ -19,7 +19,6 @@
         min-width: 200px;
         background: blue;
         border-radius: 3px;
-
 
         position: absolute;
         display: none;
@@ -34,20 +33,20 @@
         position: relative;
         overflow: hidden;
       }
-
     </style>
   </head>
   <body>
     <div id="steppp">
-        <section data-steppp-active>1
-          <button data-steppp-to="number_five">go</button>
-        </section>
-        <section style="height: 200px;">2</section>
-        <section>3</section>
-        <section>4</section>
-        <section data-steppp-name="number_five">5</section>
-        <section>6</section>
-        <section>7</section>
+      <section data-steppp-active>
+        1
+        <button data-steppp-to="number_five">go</button>
+      </section>
+      <section style="height: 200px">2</section>
+      <section>3</section>
+      <section>4</section>
+      <section data-steppp-name="number_five">5</section>
+      <section>6</section>
+      <section>7</section>
 
       <button id="backward" data-steppp-backward>backward!</button>
       <button id="next" data-steppp-forward>forward!</button>
@@ -56,7 +55,7 @@
     <script type="module">
       import Steppp from "/src/index.ts";
 
-      const element = document.getElementById('steppp');
+      const element = document.getElementById("steppp");
 
       Steppp(element);
     </script>

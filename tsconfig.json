@@ -4,8 +4,10 @@
     "module": "ESNext",
     "declaration": true,
     "emitDeclarationOnly": true,
-    "outDir": "dist",
-    "lib": ["ESNext", "DOM"],
+    "lib": [
+      "ESNext",
+      "DOM"
+    ],
     "moduleResolution": "Node",
     "strict": true,
     "sourceMap": true,
@@ -18,7 +20,5 @@
       "vite/client",
       "vitest/globals"
     ]
-  },
-  "include": [
-    "./src", "integration/index.test.js"]
+  }
 }

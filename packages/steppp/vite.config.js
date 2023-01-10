@@ -4,7 +4,7 @@ import path from "path";
 export default defineConfig({
   test: {
     environment: "jsdom",
-    setupFiles: "./src/setupTests.js",
+    setupFiles: "../../setupTests.js",
   },
   build: {
     minify: "terser",

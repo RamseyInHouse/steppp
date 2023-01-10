@@ -1,4 +1,11 @@
-import { Options, StepMovementArgs, Frame, FrameDef, Direction } from "./types";
+import {
+  Options,
+  StepMovementArgs,
+  Frame,
+  FrameDef,
+  Direction,
+  Instance,
+} from "./types";
 import {
   buildAnimation,
   getHeight,
@@ -9,7 +16,7 @@ import {
 } from "./utils";
 import defaultOptions from "./defaultOptions";
 
-function Steppp(element: HTMLElement, options: any = defaultOptions) {
+function Steppp(element: HTMLElement, options: any = defaultOptions): Instance {
   options = { ...defaultOptions, ...options } as Options;
 
   const stepWrapper = (element.querySelector("[data-steppp-wrapper]") ||
