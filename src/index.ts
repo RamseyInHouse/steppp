@@ -243,6 +243,4 @@ function Steppp(element: HTMLElement, options: any = defaultOptions) {
   };
 }
 
-Steppp.stepIsValid = (_slide: HTMLElement): boolean => true;
-
 export default Steppp;

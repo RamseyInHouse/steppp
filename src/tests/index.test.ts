@@ -95,33 +95,37 @@ it("Sets up resize listeners for the active step.", () => {
   expect(unobserveMock).toHaveBeenCalledTimes(0);
 });
 
-// it("Handles custom enter/exit animations.", () => {
-//     const buildAnimationSpy = vi.spyOn(utils, 'buildAnimation').mockImplementation(() => {
-//         return {
-//             finished: Promise.resolve(true),
-//             commitStyles() {},
-//             persist() {}
-//         }
-//     });
+it("Handles custom enter/exit animations.", () => {
+  const buildAnimationSpy = vi
+    .spyOn(utils, "buildAnimation")
+    .mockImplementation(() => {
+      return {
+        finished: Promise.resolve(true),
+        commitStyles() {},
+        persist() {},
+      } as unknown as Animation;
+    });
 
-//     const { forward } = Steppp(getEl(), {
-//         frames: [
-//             {
-//                 opacity: 0
-//             },
-//             {
-//                 opacity: 1
-//             }
-//         ]
-//     });
+  const { forward } = Steppp(getEl(), {
+    frames: [
+      {
+        opacity: 0,
+      },
+      {
+        opacity: 1,
+      },
+    ],
+  });
 
-//     forward();
+  forward();
 
-//     getEl().addEventListener('steppp:complete', () => {
-//         const frames = buildAnimationSpy.mock.calls[0][0].frames;
-//         expect(frames).toEqual(
-//             expect.arrayContaining([ { opacity: 0 }, {  opacity: 1 } ])
-//         )
-//         done();
-//     });
-// });
+  getEl().addEventListener("steppp:complete", () => {
+    return new Promise<void>((resolve) => {
+      const frames = buildAnimationSpy.mock.calls[0][0].frames;
+      expect(frames).toEqual(
+        expect.arrayContaining([{ opacity: 0 }, { opacity: 1 }])
+      );
+      resolve();
+    });
+  });
+});
