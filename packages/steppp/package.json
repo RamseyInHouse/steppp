@@ -1,0 +1,32 @@
+{
+  "name": "@ramseyinhouse/steppp",
+  "version": "0.0.4",
+  "main": "dist/steppp.umd.js",
+  "module": "dist/steppp.es.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist/"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build && tsc",
+    "serve": "vite preview",
+    "test": "tsc && vitest run",
+    "prettier": "prettier --write \"**/*.{js,ts,css,md}\""
+  },
+  "devDependencies": {
+    "@testing-library/dom": "^8.19.1",
+    "@types/node": "^18.11.18",
+    "@types/web-animations-js": "^2.2.12",
+    "jsdom": "^20.0.3",
+    "lint-staged": ">=13.1.0",
+    "prettier": "2.8.1",
+    "terser": "5.16.1",
+    "typescript": "^4.9.4",
+    "vite": "^4.0.4",
+    "vitest": "^0.26.3"
+  },
+  "lint-staged": {
+    "*.{js,ts,css,md}": "prettier --write"
+  }
+}

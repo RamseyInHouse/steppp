@@ -34,7 +34,7 @@ beforeEach(() => {
 it("moves forward.", () => {
   getByText(getBody(), "forward").click();
 
-  new Promise<void>((resolve) => {
+  return new Promise<void>((resolve) => {
     getEl().addEventListener("steppp:complete", () => {
       expect(getByText(getBody(), "2").dataset.stepppActive).toEqual("");
       resolve();
@@ -45,7 +45,6 @@ it("moves forward.", () => {
 it("moves backward", () => {
   getByText(getEl(), "1").removeAttribute("data-steppp-active");
   getByText(getEl(), "4").setAttribute("data-steppp-active", "");
-
   getByText(getBody(), "backward").click();
 
   return new Promise<void>((resolve) => {

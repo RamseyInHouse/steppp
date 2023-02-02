@@ -16,5 +16,10 @@ export type Options = {
   frames: Frame[] | FrameDef;
   stepSelector?: string;
 };
+export type Instance = {
+  moveTo: (stepName: string) => void;
+  forward: () => void;
+  backward: () => void;
+};
 
 export type StepMovementArgs = { stepName?: string; direction?: Direction };
