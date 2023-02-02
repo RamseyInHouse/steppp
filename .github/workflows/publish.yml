@@ -27,4 +27,4 @@ jobs:
         run: |
           yarn install
           yarn build
-          yarn run lerna publish from-package --yes
+          yarn run lerna publish from-package
