@@ -17,15 +17,14 @@ jobs:
           node-version: 17
           registry-url: https://registry.npmjs.org/
           scope: '@ramseyinhouse'
-      - run: echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > .npmrc
-      - run: |
+      - name: "Configure npm"
+        run: echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > .npmrc
+      - name: "Configure Git"
+        run: | 
+          git config user.name "RamseyInHouse Open Source"
+          git config user.email "opensource@ramseysolutions.com"
+      - name: "Build & Publish Package"
+        run: |
           yarn install
           yarn build
-          if yarn publish --access public; then
-            PACKAGE_VERSION=$(node -p "require('./package.json').version")
-            git config user.name "RamseyInHouse Open Source"
-            git config user.email "opensource@ramseysolutions.com"
-            git tag -a v$PACKAGE_VERSION -m "Create release v$PACKAGE_VERSION."
-            git push --tags
-            echo v$PACKAGE_VERSION
-          fi
+          yarn run lerna publish from-package --yes
