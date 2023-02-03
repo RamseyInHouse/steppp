@@ -1,6 +1,7 @@
 {
     "name": "@ramseyinhouse/steppp-react",
     "version": "0.0.1",
+    "license": "GPL-3.0",
     "main": "dist/steppp-react.umd.js",
     "module": "dist/steppp-react.es.js",
     "types": "dist/index.d.ts",
@@ -28,6 +29,9 @@
     },
     "lint-staged": {
         "*.{js,ts,css,md}": "prettier --write"
+    },
+    "publishConfig": {
+        "access": "public"
     },
     "dependencies": {
         "@ramseyinhouse/steppp": "*",
