@@ -2,7 +2,7 @@
     "name": "@ramseyinhouse/steppp-monorepo",
     "private": true,
     "scripts": {
-        "install-all": "lerna exec npm install",
+        "install-all": "lerna exec yarn install",
         "build": "lerna run build",
         "test": "lerna run test",
         "graph": "nx graph",
