@@ -26,5 +26,6 @@ jobs:
       - name: "Build & Publish Package"
         run: |
           yarn install
+          yarn install-all
           yarn build
           yarn run lerna publish from-package
