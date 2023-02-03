@@ -11,3 +11,4 @@ Steppp is a small library for quickly creating multi-step forms, carousels, and 
 This is a monorepo with multiple versions of Steppp you can leverage.
 
 - Vanilla - [@ramseyinhouse/steppp](/packages/steppp/)
+- React - [@ramseyinhouse/steppp-react](/packages/steppp-react/)

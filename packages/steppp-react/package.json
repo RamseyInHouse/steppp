@@ -1,0 +1,37 @@
+{
+    "name": "@ramseyinhouse/steppp-react",
+    "version": "0.0.1",
+    "main": "dist/steppp-react.umd.js",
+    "module": "dist/steppp-react.es.js",
+    "types": "dist/index.d.ts",
+    "files": [
+        "dist/"
+    ],
+    "scripts": {
+        "dev": "vite serve example",
+        "build": "vite build && tsc",
+        "serve": "vite preview",
+        "test": "vitest run",
+        "format": "prettier --write \"**/*.{js,ts,css,md}\""
+    },
+    "devDependencies": {
+        "@testing-library/react": "13.4.0",
+        "@types/react": "18.0.27",
+        "@types/react-dom": "18.0.10",
+        "jsdom": "21.1.0",
+        "lint-staged": ">=13.1.0",
+        "prettier": "2.8.3",
+        "terser": "5.16.1",
+        "typescript": "^4.9.4",
+        "vite": "^4.0.4",
+        "vitest": "^0.26.3"
+    },
+    "lint-staged": {
+        "*.{js,ts,css,md}": "prettier --write"
+    },
+    "dependencies": {
+        "@ramseyinhouse/steppp": "*",
+        "react": "18.2.0",
+        "react-dom": "18.2.0"
+    }
+}

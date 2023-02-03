@@ -2,6 +2,7 @@
     "name": "@ramseyinhouse/steppp-monorepo",
     "private": true,
     "scripts": {
+        "install-all": "lerna exec npm install",
         "build": "lerna run build",
         "test": "lerna run test",
         "graph": "nx graph",
@@ -14,8 +15,5 @@
     "devDependencies": {
         "lerna": "^6.4.1",
         "prettier": "2.8.3"
-    },
-    "workspaces": [
-        "packages/*"
-    ]
+    }
 }
