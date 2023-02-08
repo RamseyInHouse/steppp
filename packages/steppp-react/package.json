@@ -1,12 +1,13 @@
 {
     "name": "@ramseyinhouse/steppp-react",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "license": "GPL-3.0",
     "main": "dist/steppp-react.umd.js",
     "module": "dist/steppp-react.es.js",
     "types": "dist/index.d.ts",
     "files": [
-        "dist/"
+        "dist/", 
+        "src/"
     ],
     "scripts": {
         "dev": "vite serve example",
