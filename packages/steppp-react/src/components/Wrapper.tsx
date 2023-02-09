@@ -1,7 +1,5 @@
-import { ReactNode } from "react";
-
 interface WrapperProps {
-  children: ReactNode | ReactNode[];
+  children: JSX.Element[] | JSX.Element;
 }
 
 export function Wrapper({ children, ...rest }: WrapperProps) {

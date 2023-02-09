@@ -1,9 +1,8 @@
 {
   "name": "@ramseyinhouse/steppp-react",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "license": "GPL-3.0",
-  "main": "dist/steppp-react.umd.js",
-  "module": "dist/steppp-react.es.js",
+  "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
     "dist/",

@@ -1,9 +1,7 @@
-import { ReactNode } from "react";
-
 interface StepProps {
   initialActive?: boolean;
   name?: string;
-  children: ReactNode | ReactNode[];
+  children: JSX.Element[] | JSX.Element | (string | JSX.Element)[] | string;
 }
 
 export function Step({ children, initialActive, name, ...rest }: StepProps) {

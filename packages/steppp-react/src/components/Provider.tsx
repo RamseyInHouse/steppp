@@ -1,9 +1,9 @@
 import Steppp from "@ramseyinhouse/steppp";
-import { ReactNode, useLayoutEffect, useRef, useState } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 import { StepppContext, stubbedMethods } from "../context";
 
 interface WrapperProps {
-  children(instance: StepppInstance): ReactNode | ReactNode[];
+  children(instance: StepppInstance): JSX.Element[] | JSX.Element;
   [key: string]: any;
 }
 
