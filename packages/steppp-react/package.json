@@ -1,42 +1,41 @@
 {
-    "name": "@ramseyinhouse/steppp-react",
-    "version": "0.0.2",
-    "license": "GPL-3.0",
-    "main": "dist/steppp-react.umd.js",
-    "module": "dist/steppp-react.es.js",
-    "types": "dist/index.d.ts",
-    "files": [
-        "dist/", 
-        "src/"
-    ],
-    "scripts": {
-        "dev": "vite serve example",
-        "build": "vite build && tsc",
-        "serve": "vite preview",
-        "test": "vitest run",
-        "format": "prettier --write \"**/*.{js,ts,css,md}\""
-    },
-    "devDependencies": {
-        "@testing-library/react": "13.4.0",
-        "@types/react": "18.0.27",
-        "@types/react-dom": "18.0.10",
-        "jsdom": "21.1.0",
-        "lint-staged": ">=13.1.0",
-        "prettier": "2.8.3",
-        "terser": "5.16.1",
-        "typescript": "^4.9.4",
-        "vite": "^4.0.4",
-        "vitest": "^0.26.3"
-    },
-    "lint-staged": {
-        "*.{js,ts,css,md}": "prettier --write"
-    },
-    "publishConfig": {
-        "access": "public"
-    },
-    "dependencies": {
-        "@ramseyinhouse/steppp": "*",
-        "react": "18.2.0",
-        "react-dom": "18.2.0"
-    }
+  "name": "@ramseyinhouse/steppp-react",
+  "version": "0.0.3",
+  "license": "GPL-3.0",
+  "main": "dist/steppp-react.umd.js",
+  "module": "dist/steppp-react.es.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist/",
+    "src/"
+  ],
+  "scripts": {
+    "dev": "vite serve example",
+    "build": "rm -rf dist && tsc --module es2015",
+    "test": "vitest run",
+    "format": "prettier --write \"**/*.{js,ts,css,md,json}\""
+  },
+  "devDependencies": {
+    "@testing-library/react": "13.4.0",
+    "@types/react": "18.0.27",
+    "@types/react-dom": "18.0.10",
+    "jsdom": "21.1.0",
+    "lint-staged": ">=13.1.0",
+    "prettier": "2.8.3",
+    "terser": "5.16.1",
+    "typescript": "^4.9.4",
+    "vite": "^4.0.4",
+    "vitest": "^0.26.3"
+  },
+  "lint-staged": {
+    "*.{js,ts,css,md}": "prettier --write"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@ramseyinhouse/steppp": "*",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
+  }
 }
