@@ -52,3 +52,33 @@ function SubStep({ children, ...rest }: { children: any }) {
   );
 }
 ```
+
+### Customizing the Animation
+
+Steppp is powered by the Web Animations API. To customize the animation, you can pass either an array of frames, or an object with `enter` and `exit` properties. For more information, [see here](https://github.com/RamseyInHouse/steppp/tree/master/packages/steppp#customizing-the-animation).
+
+```tsx
+import { Provider, Wrapper, Step } from "@ramseyinhouse/steppp-react";
+
+// Rotate the incoming & outgoing steps.
+const options = {
+  frames: {
+    enter: [
+      { transform: "rotate(0deg)", opacity: 0 },
+      { transform: "rotate(360deg)", opacity: 1 },
+    ],
+    exit: [
+      { transform: "rotate(360deg)", opacity: 1 },
+      { transform: "rotate(0deg)", opacity: 0 },
+    ],
+  },
+};
+
+function App() {
+  return (
+    <Provider options={options}>
+      {({ moveTo, forward, backward }) => <>Steps go here...</>}
+    </Provider>
+  );
+}
+```
