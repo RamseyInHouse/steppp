@@ -17,9 +17,9 @@ export type Options = {
   stepSelector?: string;
 };
 export type Instance = {
-  moveTo: (stepName: string) => void;
-  forward: () => void;
-  backward: () => void;
+  moveTo: (stepName: string) => Promise<void>;
+  forward: () => Promise<void>;
+  backward: () => Promise<void>;
 };
 
 export type StepMovementArgs = { stepName?: string; direction?: Direction };
