@@ -1,16 +1,12 @@
 import Steppp from "@ramseyinhouse/steppp";
+import type { Instance, Options } from "@ramseyinhouse/steppp/dist/types";
 import { useLayoutEffect, useRef, useState } from "react";
 import { StepppContext, stubbedMethods } from "../context";
 
-interface WrapperProps {
-  children(instance: StepppInstance): JSX.Element[] | JSX.Element;
+interface ProviderProps {
+  children(instance: Instance): JSX.Element[] | JSX.Element;
+  options?: Partial<Options>;
   [key: string]: any;
-}
-
-export interface StepppInstance {
-  moveTo: (stepName: string) => void;
-  forward: () => void;
-  backward: () => void;
 }
 
 const baseCss = `
@@ -30,16 +26,16 @@ const baseCss = `
     }
 `;
 
-export function Provider({ children, ...rest }: WrapperProps) {
+export function Provider({ children, options = {}, ...rest }: ProviderProps) {
   const stepRef = useRef<HTMLDivElement>(null);
-  const [stepppInstance, setStepppInstance] = useState<StepppInstance>(
-    null as unknown as StepppInstance
+  const [stepppInstance, setStepppInstance] = useState<Instance>(
+    null as unknown as Instance
   );
 
   useLayoutEffect(() => {
     if (stepppInstance || !stepRef.current) return;
 
-    setStepppInstance(Steppp(stepRef.current));
+    setStepppInstance(Steppp(stepRef.current, options));
   }, []);
 
   return (
