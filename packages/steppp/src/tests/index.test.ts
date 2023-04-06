@@ -1,7 +1,9 @@
 import { getEl } from "./test-helpers";
 import Steppp from "../index";
 import * as utils from "../utils";
-import { beforeEach, it, expect, vi } from "vitest";
+import { beforeEach, it, expect, vi, Mock } from "vitest";
+
+let mockObserve: Mock;
 
 beforeEach(() => {
   document.body.innerHTML = `
@@ -12,11 +14,19 @@ beforeEach(() => {
       <section>4</section>
       <section>5</section>
     </div>
-
++
     <button id="forward">
       forward
     </button>
   `;
+
+  mockObserve = vi.fn();
+
+  global.MutationObserver = vi.fn().mockImplementation(() => {
+    return {
+      observe: mockObserve,
+    };
+  });
 });
 
 it("Default animations are used.", (): Promise<void> =>
@@ -128,4 +138,10 @@ it("Handles custom enter/exit animations.", () => {
       resolve();
     });
   });
+});
+
+it("Observes children for changes to steps.", () => {
+  Steppp(getEl());
+
+  expect(mockObserve).toHaveBeenCalledWith(getEl(), expect.any(Object));
 });

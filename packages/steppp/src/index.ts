@@ -19,15 +19,11 @@ import defaultOptions from "./defaultOptions";
 function Steppp(element: HTMLElement, options: any = defaultOptions): Instance {
   options = { ...defaultOptions, ...options } as Options;
 
-  const stepWrapper = (element.querySelector("[data-steppp-wrapper]") ||
-    element) as HTMLElement;
-  const stepNodes: NodeList | HTMLCollection = options.stepSelector
-    ? stepWrapper.querySelectorAll(options.stepSelector)
-    : stepWrapper.children;
-  const steps = Array.from(stepNodes) as HTMLElement[];
-
+  let steps: HTMLElement[] = [];
   const mergedOptions: Options = { ...defaultOptions, ...options };
   const { stepIsValid } = mergedOptions;
+  const stepWrapper = (element.querySelector("[data-steppp-wrapper]") ||
+    element) as HTMLElement;
 
   const getStep = (stepIndex: number = getActiveStepIndex()): HTMLElement => {
     return steps[stepIndex];
@@ -221,13 +217,30 @@ function Steppp(element: HTMLElement, options: any = defaultOptions): Instance {
 
   let currentAnimations: Animation[] = [];
 
-  getStep().style.position = "absolute";
+  const setUp = () => {
+    // Set the steps.
+    steps = Array.from(
+      options.stepSelector
+        ? stepWrapper.querySelectorAll(options.stepSelector)
+        : stepWrapper.children
+    ) as HTMLElement[];
+
+    // Set the active step positioning.
+    getStep().style.position = "absolute";
+
+    // Observer the active step for height changes.
+    heightObserver.observe(getStep());
+
+    // Ensure no display styles are set.
+    steps.forEach((step) => step.removeAttribute("style"));
+  };
+
+  setUp();
+
   const currentStepHeight = getHeight(getStep());
   stepWrapper.style.height = `${currentStepHeight}px`;
 
   let currentWrapperHeight = currentStepHeight;
-
-  heightObserver.observe(getStep());
 
   element.querySelectorAll("[data-steppp-backward]").forEach((el) => {
     el.addEventListener("click", backward);
@@ -238,10 +251,14 @@ function Steppp(element: HTMLElement, options: any = defaultOptions): Instance {
   });
 
   element.querySelectorAll("[data-steppp-to]").forEach((el) => {
-    el.addEventListener("click", () => {
-      moveTo((el as HTMLElement).dataset.stepppTo || "");
-    });
+    el.addEventListener("click", () =>
+      moveTo((el as HTMLElement).dataset.stepppTo || "")
+    );
   });
+
+  new MutationObserver(() => {
+    setUp();
+  }).observe(element, { childList: true, subtree: true });
 
   return {
     backward,
