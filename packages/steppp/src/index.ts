@@ -13,6 +13,7 @@ import {
   afterRepaint,
   isMovingBackward,
   flip,
+  getDimensions,
 } from "./utils";
 import defaultOptions from "./defaultOptions";
 
@@ -87,6 +88,34 @@ function Steppp(element: HTMLElement, options: any = defaultOptions): Instance {
     ];
   };
 
+  /**
+   * While animating, we need to "freeze" the dimensions of each step, since they'll be
+   * absolutely positioned and removed from the document flow. Then, we can reset.
+   */
+  const transitionDimensions = (oldStep: HTMLElement, newStep: HTMLElement) => {
+    const { height: oldHeight, width: oldWidth } = getDimensions(oldStep);
+    const { height: newHeight, width: newWidth } = getDimensions(newStep);
+
+    oldStep.style.width = `${oldWidth}px`;
+    oldStep.style.height = `${oldHeight}px`;
+
+    newStep.style.width = `${newWidth}px`;
+    newStep.style.height = `${newHeight}px`;
+
+    oldStep.style.position = "absolute";
+    newStep.style.position = "absolute";
+
+    return function resetDimensions() {
+      const modifiedAttributes = ["width", "height", "position"];
+
+      [oldStep, newStep].forEach((step) => {
+        modifiedAttributes.forEach((attr) => {
+          step.style[attr as any] = "";
+        });
+      });
+    };
+  };
+
   const moveStep = async ({
     stepName = "",
     direction = "forward",
@@ -99,24 +128,18 @@ function Steppp(element: HTMLElement, options: any = defaultOptions): Instance {
       afterRepaint(async () => {
         const fallbackIncrementor = direction === "forward" ? 1 : -1;
         const oldActiveStep = getStep();
+
         const newActiveStep =
           getStepByName(stepName) ||
           getStep(getActiveStepIndex() + fallbackIncrementor);
+
         const eventArgs = {
           oldStep: oldActiveStep,
           newStep: newActiveStep,
           element,
         };
 
-        if (direction === "forward" && !(await stepIsValid(getStep()))) {
-          fireCustomEvent({
-            ...eventArgs,
-            name: "steppp:invalid",
-          });
-
-          return resolve();
-        }
-
+        // We're at the end of the line. Don't bother with anything else.
         if (!newActiveStep) {
           fireCustomEvent({
             ...eventArgs,
@@ -124,6 +147,28 @@ function Steppp(element: HTMLElement, options: any = defaultOptions): Instance {
           });
 
           return resolve();
+        }
+
+        newActiveStep.style.display = "block";
+
+        const resetDimensions = transitionDimensions(
+          oldActiveStep,
+          newActiveStep
+        );
+
+        function resolveAndReset() {
+          resetDimensions();
+
+          return resolve();
+        }
+
+        if (direction === "forward" && !(await stepIsValid(getStep()))) {
+          fireCustomEvent({
+            ...eventArgs,
+            name: "steppp:invalid",
+          });
+
+          return resolveAndReset();
         }
 
         fireCustomEvent({
@@ -164,7 +209,7 @@ function Steppp(element: HTMLElement, options: any = defaultOptions): Instance {
             name: "steppp:complete",
           });
 
-          return resolve();
+          return resolveAndReset();
         });
       });
     });
@@ -220,28 +265,11 @@ function Steppp(element: HTMLElement, options: any = defaultOptions): Instance {
   const animationFrames: FrameDef = computeAnimationFrames(options.frames);
 
   let currentAnimations: Animation[] = [];
-
-  getStep().style.position = "absolute";
   const currentStepHeight = getHeight(getStep());
-  stepWrapper.style.height = `${currentStepHeight}px`;
 
   let currentWrapperHeight = currentStepHeight;
 
   heightObserver.observe(getStep());
-
-  element.querySelectorAll("[data-steppp-backward]").forEach((el) => {
-    el.addEventListener("click", backward);
-  });
-
-  element.querySelectorAll("[data-steppp-forward]").forEach((el) => {
-    el.addEventListener("click", forward);
-  });
-
-  element.querySelectorAll("[data-steppp-to]").forEach((el) => {
-    el.addEventListener("click", () => {
-      moveTo((el as HTMLElement).dataset.stepppTo || "");
-    });
-  });
 
   return {
     backward,

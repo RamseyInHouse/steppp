@@ -25,8 +25,6 @@ In order to Steppp to behave correctly, you'll need the following CSS:
 
 .step {
   display: none;
-  position: absolute;
-  left: 0;
 }
 
 [data-steppp-active] {
@@ -45,7 +43,7 @@ In order to Steppp to behave correctly, you'll need the following CSS:
 
 To set up a basic instance of Steppp, select an element and pass it to `Steppp`.
 
-```js
+```javascript
 import Steppp from "@ramseyinhouse/steppp";
 
 const element = document.getElementById("targetElement");
@@ -93,7 +91,7 @@ Steps can be configured in three ways. After choosing an option, be sure to add 
 
 When choosing this approach, you'll need to pass the selector to the `stepSelector` option during initialization:
 
-```js
+```javascript
 const element = document.getElementById("targetElement");
 
 Steppp(element, {
@@ -115,13 +113,9 @@ If your multi-step flow will jump around a bit instead of moving through steps i
 
 ## Move From Step to Step
 
-Steppp comes with two API approaches -- an imperative (you dictate when it'll advance in your code) and declarative (behavior is described by setting various `data-steppp-*` attributes).
-
-## Imperative API
-
 Create a new instance by calling `Steppp` and passing a target element. Functions will be returned for moving forward, backward, or directly to a specific step (see more on this below).
 
-```js
+```javascript
 const element = document.getElementById("targetElement");
 const { forward, backward, moveTo } = Steppp(element);
 
@@ -138,45 +132,13 @@ document.querySelector("#moveToStepA").addEventListener("click", () => {
 });
 ```
 
-#### Declarative API
-
-The declarative approach requires that you place `data-steppp-forward`, `data-steppp-backward` on the elements you'd like to trigger particular movements.
-
-```html
-<div id="steppp">
-  <div data-steppp-wrapper>
-    <section data-steppp-active>first</section>
-    <!-- ...other steps -->
-  </div>
-
-  <button data-steppp-forward>Forward</button>
-  <button data-steppp-backward>Backward</button>
-</div>
-```
-
-You can also tell elements to move Steppp to a particular step when clicked with a `data-steppp-to` attribute.
-
-```html
-<div id="steppp">
-  <div data-steppp-wrapper>
-    <section data-steppp-active>
-      some step
-      <button data-steppp-to="third_step">Go to Step</button>
-    </section>
-    <!-- ...other steps -->
-    <section data-steppp-name="third_step">another step</section>
-  </div>
-  <button data-steppp-backward>Backward</button>
-</div>
-```
-
 ### Customizing the Animation
 
 Steppp relies on the [Web Animations API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Animations_API) to power step transitions. By default, a simple fade is configured by using frames that [change the opacity](https://github.com/RamseyInHouse/steppp/blob/master/src/defaultOptions.ts#L5) of the incoming and outgoing steps.
 
 You can control this animation by passing your own frames. If you simply pass an array of frames, the given order will be applied to the incoming step, and the reverse will be used for the outgoing:
 
-```js
+```javascript
 const element = document.getElementById("targetElement");
 
 Steppp(element, {
@@ -186,7 +148,7 @@ Steppp(element, {
 
 But you can also specify `enter` and `exit` properties for your frames. These will be used on the appropriate step during the respective transition.
 
-```js
+```javascript
 const element = document.getElementById("targetElement");
 
 Steppp(element, {
@@ -207,7 +169,7 @@ Steppp(element, {
 
 Steppp provides several custom events that you can listen for and hook into.
 
-```js
+```javascript
 const element = document.getElementById("targetElement");
 Steppp(element);
 element.addEventListener("steppp:complete", (event) => {
