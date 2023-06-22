@@ -20,9 +20,7 @@ const baseCss = `
     }
 
     section {
-        position: absolute;
         display: none;
-        left: 0;
     }
 `;
 
@@ -42,7 +40,7 @@ export function Provider({ children, options = {}, ...rest }: ProviderProps) {
     <StepppContext.Provider value={stepppInstance || stubbedMethods}>
       <style>{baseCss}</style>
 
-      <div ref={stepRef} style={{ position: "relative" }} {...rest}>
+      <div ref={stepRef} {...rest}>
         {children(stepppInstance || {})}
       </div>
     </StepppContext.Provider>
