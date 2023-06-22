@@ -3,16 +3,7 @@ import { Provider, Wrapper, Step } from "../src/index";
 import { SubStep } from "./SubStep";
 
 const options = {
-  frames: {
-    enter: [
-      { transform: "rotate(0deg)", opacity: 0 },
-      { transform: "rotate(360deg)", opacity: 1 },
-    ],
-    exit: [
-      { transform: "rotate(360deg)", opacity: 1 },
-      { transform: "rotate(0deg)", opacity: 0 },
-    ],
-  }
+  frames: [{ opacity: "0" }, { opacity: "1" }],
 }
 
 function App() {

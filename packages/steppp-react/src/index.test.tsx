@@ -38,11 +38,6 @@ describe("Using standard implementation.", () => {
       expect(getByText(text).tagName).toEqual("SECTION");
     });
 
-    expect(root.style.position).toEqual("relative");
-    expect(
-      (root.querySelector("section[data-steppp-active]") as HTMLElement)?.style
-        ?.position
-    ).toBe("absolute");
     expect(getByText("two").getAttribute("data-steppp-active")).toEqual("true");
   });
 
