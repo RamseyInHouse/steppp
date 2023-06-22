@@ -75,7 +75,7 @@
 
       const element = document.getElementById("steppp");
 
-      Steppp(element, {
+      const { forward, backward } = Steppp(element, {
         frames: {
           enter: [
             { transform: "translateX(0%)" },
@@ -87,6 +87,9 @@
           ],
         },
       });
+
+      document.getElementById("next").addEventListener("click", forward);
+      document.getElementById("backward").addEventListener("click", backward);
     </script>
   </body>
 </html>
