@@ -8,21 +8,17 @@
 
     <style>
       * {
-        color: white;
+        color: black;
       }
       #steppp {
         position: relative;
       }
 
       section {
-        min-height: 500px;
-        min-width: 200px;
         background: blue;
         border-radius: 3px;
 
-        position: absolute;
         display: none;
-        left: 0;
       }
 
       [data-steppp-active] {
@@ -30,26 +26,48 @@
       }
 
       [data-steppp-wrapper] {
-        position: relative;
         overflow: hidden;
+        position: relative;
+      }
+
+      .wrapper {
+        max-width: 400px;
+      }
+
+      #step-2 {
+        height: 200px;
       }
     </style>
   </head>
   <body>
-    <div id="steppp">
-      <section data-steppp-active>
-        1
-        <button data-steppp-to="number_five">go</button>
-      </section>
-      <section style="height: 200px">2</section>
-      <section>3</section>
-      <section>4</section>
-      <section data-steppp-name="number_five">5</section>
-      <section>6</section>
-      <section>7</section>
+    <div class="wrapper">
+      <div id="steppp">
+        <div data-steppp-wrapper>
+          <section data-steppp-active>
+            1
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+          </section>
+          <section id="step-2">2</section>
+          <section>3</section>
+          <section>4</section>
+          <section data-steppp-name="number_five">5</section>
+          <section>6</section>
+          <section>7</section>
+        </div>
 
-      <button id="backward" data-steppp-backward>backward!</button>
-      <button id="next" data-steppp-forward>forward!</button>
+        <button id="backward" data-steppp-backward>backward!</button>
+        <button id="next" data-steppp-forward>forward!</button>
+      </div>
     </div>
 
     <script type="module">
@@ -57,7 +75,18 @@
 
       const element = document.getElementById("steppp");
 
-      Steppp(element);
+      Steppp(element, {
+        frames: {
+          enter: [
+            { transform: "translateX(0%)" },
+            { transform: "translateX(-100%)" },
+          ],
+          exit: [
+            { transform: "translateX(0%)" },
+            { transform: "translateX(100%)" },
+          ],
+        },
+      });
     </script>
   </body>
 </html>

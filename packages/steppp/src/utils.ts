@@ -17,8 +17,12 @@ export const buildAnimation = ({
   });
 };
 
+export const getDimensions = (element: HTMLElement): DOMRect => {
+  return element.getBoundingClientRect();
+};
+
 export const getHeight = (element: HTMLElement): number => {
-  return element.getBoundingClientRect().height;
+  return getDimensions(element).height;
 };
 
 export const fireCustomEvent = ({
