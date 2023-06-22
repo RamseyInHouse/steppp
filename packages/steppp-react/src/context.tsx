@@ -1,14 +1,14 @@
 import React, { useContext } from "react";
-import { StepppInstance } from "./components/Provider";
+import type { Instance } from "@ramseyinhouse/steppp/dist/types";
 
 export const stubbedMethods = {
-  forward: () => {},
-  backward: () => {},
-  moveTo: () => {},
+  forward: () => Promise.resolve(),
+  backward: () => Promise.resolve(),
+  moveTo: () => Promise.resolve(),
 };
 
 export const StepppContext =
-  React.createContext<StepppInstance>(stubbedMethods);
+  React.createContext<Instance>(stubbedMethods);
 
 export function useSteppp() {
   return useContext(StepppContext);
