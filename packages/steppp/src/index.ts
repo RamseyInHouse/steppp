@@ -55,24 +55,38 @@ function Steppp(element: HTMLElement, options: any = defaultOptions): Instance {
     return buildAnimation(args);
   };
 
+  const getFrames = (
+    direction: Direction
+  ): {
+    oldStepFrames: Frame[];
+    newStepFrames: Frame[];
+  } => {
+    const backward = isMovingBackward(direction);
+    const { enter, exit } = animationFrames;
+
+    return {
+      oldStepFrames: backward ? flip(exit) : exit,
+      newStepFrames: backward ? flip(enter) : enter,
+    };
+  };
+
   const queueAnimations = (
     oldStep: HTMLElement,
     newStep: HTMLElement,
     direction: Direction
   ) => {
-    const backward = isMovingBackward(direction);
-    const { enter, exit } = animationFrames;
+    const { oldStepFrames, newStepFrames } = getFrames(direction);
     const oldStepHeight = `${currentWrapperHeight}px`;
     const newStepHeight = `${calculateWrapperHeight(newStep)}px`;
 
     return [
       animate({
-        frames: backward ? flip(exit) : exit,
-        targetElement: backward ? newStep : oldStep,
+        frames: oldStepFrames,
+        targetElement: oldStep,
       }),
       animate({
-        frames: backward ? flip(enter) : enter,
-        targetElement: backward ? oldStep : newStep,
+        frames: newStepFrames,
+        targetElement: newStep,
       }),
       animate({
         frames: [
@@ -92,9 +106,14 @@ function Steppp(element: HTMLElement, options: any = defaultOptions): Instance {
    * While animating, we need to "freeze" the dimensions of each step, since they'll be
    * absolutely positioned and removed from the document flow. Then, we can reset.
    */
-  const transitionDimensions = (oldStep: HTMLElement, newStep: HTMLElement) => {
+  const transitionDimensions = (
+    oldStep: HTMLElement,
+    newStep: HTMLElement,
+    direction: Direction
+  ) => {
     const { height: oldHeight, width: oldWidth } = getDimensions(oldStep);
     const { height: newHeight, width: newWidth } = getDimensions(newStep);
+    const { oldStepFrames, newStepFrames } = getFrames(direction);
 
     oldStep.style.width = `${oldWidth}px`;
     oldStep.style.height = `${oldHeight}px`;
@@ -105,9 +124,19 @@ function Steppp(element: HTMLElement, options: any = defaultOptions): Instance {
     oldStep.style.position = "absolute";
     newStep.style.position = "absolute";
 
+    // Set the initial state of the upcoming animation, so that
+    // there's no flash of the old step. This must happen _before_
+    // the next browser repaint.
+    for (const [key, value] of Object.entries(oldStepFrames[0])) {
+      oldStep.style[key as any] = value;
+    }
+
+    for (const [key, value] of Object.entries(newStepFrames[0])) {
+      newStep.style[key as any] = value;
+    }
+
     return function resetDimensions() {
       const modifiedAttributes = ["width", "height", "position"];
-
       [oldStep, newStep].forEach((step) => {
         modifiedAttributes.forEach((attr) => {
           step.style[attr as any] = "";
@@ -153,7 +182,8 @@ function Steppp(element: HTMLElement, options: any = defaultOptions): Instance {
 
         const resetDimensions = transitionDimensions(
           oldActiveStep,
-          newActiveStep
+          newActiveStep,
+          direction
         );
 
         function resolveAndReset() {
