@@ -1,18 +1,9 @@
-import {
-  Options,
-  StepMovementArgs,
-  Frame,
-  FrameDef,
-  Direction,
-  Instance,
-} from "./types";
+import { Options, StepMovementArgs, Frame, FrameDef, Instance } from "./types";
 import {
   buildAnimation,
   getHeight,
   fireCustomEvent,
   afterRepaint,
-  isMovingBackward,
-  flip,
   getDimensions,
 } from "./utils";
 import defaultOptions from "./defaultOptions";
@@ -55,37 +46,18 @@ function Steppp(element: HTMLElement, options: any = defaultOptions): Instance {
     return buildAnimation(args);
   };
 
-  const getFrames = (
-    direction: Direction
-  ): {
-    oldStepFrames: Frame[];
-    newStepFrames: Frame[];
-  } => {
-    const backward = isMovingBackward(direction);
-    const { enter, exit } = animationFrames;
-
-    return {
-      oldStepFrames: backward ? flip(exit) : exit,
-      newStepFrames: backward ? flip(enter) : enter,
-    };
-  };
-
-  const queueAnimations = (
-    oldStep: HTMLElement,
-    newStep: HTMLElement,
-    direction: Direction
-  ) => {
-    const { oldStepFrames, newStepFrames } = getFrames(direction);
+  const queueAnimations = (oldStep: HTMLElement, newStep: HTMLElement) => {
+    const { exit: exitFrames, enter: enterFrames } = animationFrames;
     const oldStepHeight = `${currentWrapperHeight}px`;
     const newStepHeight = `${calculateWrapperHeight(newStep)}px`;
 
     return [
       animate({
-        frames: oldStepFrames,
+        frames: exitFrames,
         targetElement: oldStep,
       }),
       animate({
-        frames: newStepFrames,
+        frames: enterFrames,
         targetElement: newStep,
       }),
       animate({
@@ -106,14 +78,10 @@ function Steppp(element: HTMLElement, options: any = defaultOptions): Instance {
    * While animating, we need to "freeze" the dimensions of each step, since they'll be
    * absolutely positioned and removed from the document flow. Then, we can reset.
    */
-  const transitionDimensions = (
-    oldStep: HTMLElement,
-    newStep: HTMLElement,
-    direction: Direction
-  ) => {
+  const transitionDimensions = (oldStep: HTMLElement, newStep: HTMLElement) => {
     const { height: oldHeight, width: oldWidth } = getDimensions(oldStep);
     const { height: newHeight, width: newWidth } = getDimensions(newStep);
-    const { oldStepFrames, newStepFrames } = getFrames(direction);
+    const { exit: exitFrames, enter: enterFrames } = animationFrames;
 
     oldStep.style.width = `${oldWidth}px`;
     oldStep.style.height = `${oldHeight}px`;
@@ -127,11 +95,11 @@ function Steppp(element: HTMLElement, options: any = defaultOptions): Instance {
     // Set the initial state of the upcoming animation, so that
     // there's no flash of the old step. This must happen _before_
     // the next browser repaint.
-    for (const [key, value] of Object.entries(oldStepFrames[0])) {
+    for (const [key, value] of Object.entries(exitFrames[0])) {
       oldStep.style[key as any] = value;
     }
 
-    for (const [key, value] of Object.entries(newStepFrames[0])) {
+    for (const [key, value] of Object.entries(enterFrames[0])) {
       newStep.style[key as any] = value;
     }
 
@@ -182,8 +150,7 @@ function Steppp(element: HTMLElement, options: any = defaultOptions): Instance {
 
         const resetDimensions = transitionDimensions(
           oldActiveStep,
-          newActiveStep,
-          direction
+          newActiveStep
         );
 
         function resolveAndReset() {
@@ -207,17 +174,12 @@ function Steppp(element: HTMLElement, options: any = defaultOptions): Instance {
         });
 
         afterRepaint(async () => {
-          currentAnimations = queueAnimations(
-            oldActiveStep,
-            newActiveStep,
-            direction
-          );
+          currentAnimations = queueAnimations(oldActiveStep, newActiveStep);
 
           await Promise.all(currentAnimations.map((a) => a.finished));
 
           currentAnimations.forEach((a: Animation) => {
             a.commitStyles();
-            a.persist();
           });
 
           currentAnimations = [];
@@ -250,8 +212,10 @@ function Steppp(element: HTMLElement, options: any = defaultOptions): Instance {
     height?: number
   ): number => {
     element.style.height = "";
+    const originalDisplay = step.style.display;
     step.style.display = "block";
     const newHeight = height || getHeight(step);
+    step.style.display = originalDisplay;
 
     currentWrapperHeight = newHeight;
 
