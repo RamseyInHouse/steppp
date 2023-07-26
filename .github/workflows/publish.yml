@@ -27,4 +27,4 @@ jobs:
         run: |
           npm run install-all
           npm run build
-          npx lerna publish from-package --yes
+          lerna publish from-package --yes

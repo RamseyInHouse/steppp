@@ -7,6 +7,8 @@ const options = {
 }
 
 function App() {
+  const [showExtraStep, setShowExtraStep] = React.useState(false);
+
   return (
     <Provider options={options}>
       {({ moveTo, forward, backward }) => (
@@ -19,10 +21,15 @@ function App() {
             <SubStep>two</SubStep>
             <Step name="third">three</Step>
             <Step name="fourth">fourth</Step>
+
+            { showExtraStep && <Step name="dynamic_step">DYNAMIC</Step>}
           </Wrapper>
 
           <button onClick={forward}>Forward</button>
           <button onClick={backward}>Backward</button>
+
+          <button onClick={() => setShowExtraStep(true)}>Show Extra Step</button>
+          <button onClick={() => moveTo('dynamic_step')}>Go to Dynamic Step</button>
         </>
       )}
     </Provider>
