@@ -15,7 +15,7 @@
       }
 
       section {
-        background: blue;
+        background: dodgerblue;
         border-radius: 3px;
 
         display: none;
@@ -58,11 +58,9 @@
             <br />
           </section>
           <section id="step-2">2</section>
-          <section>3</section>
+          <section data-steppp-name="number_five">3</section>
           <section>4</section>
-          <section data-steppp-name="number_five">5</section>
-          <section>6</section>
-          <section>7</section>
+          <section>5</section>
         </div>
 
         <button id="backward" data-steppp-backward>backward!</button>
@@ -75,7 +73,7 @@
 
       const element = document.getElementById("steppp");
 
-      const { forward, backward } = Steppp(element, {
+      const { forward, backward, moveTo } = Steppp(element, {
         frames: {
           enter: [
             { transform: "translateX(-100%)" },
@@ -90,6 +88,17 @@
 
       document.getElementById("next").addEventListener("click", forward);
       document.getElementById("backward").addEventListener("click", backward);
+
+      window.moveTo = moveTo;
+
+      window.inject = () => {
+        document
+          .querySelector("[data-steppp-wrapper]")
+          .insertAdjacentHTML(
+            "beforeend",
+            '<section data-steppp-name="dynamic_step">DYNAMIC!!!</section>'
+          );
+      };
     </script>
   </body>
 </html>

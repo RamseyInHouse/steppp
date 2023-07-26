@@ -13,10 +13,19 @@ function Steppp(element: HTMLElement, options: any = defaultOptions): Instance {
 
   const stepWrapper = (element.querySelector("[data-steppp-wrapper]") ||
     element) as HTMLElement;
-  const stepNodes: NodeList | HTMLCollection = options.stepSelector
-    ? stepWrapper.querySelectorAll(options.stepSelector)
-    : stepWrapper.children;
-  const steps = Array.from(stepNodes) as HTMLElement[];
+
+  let stepNodes: NodeList | HTMLCollection;
+  let steps: HTMLElement[];
+  let currentWrapperHeight: number;
+
+  const setSteps = () => {
+    stepNodes = options.stepSelector
+      ? stepWrapper.querySelectorAll(options.stepSelector)
+      : stepWrapper.children;
+    steps = Array.from(stepNodes) as HTMLElement[];
+
+    currentWrapperHeight = getHeight(getStep());
+  };
 
   const mergedOptions: Options = { ...defaultOptions, ...options };
   const { stepIsValid } = mergedOptions;
@@ -117,6 +126,8 @@ function Steppp(element: HTMLElement, options: any = defaultOptions): Instance {
     stepName = "",
     direction = "forward",
   }: StepMovementArgs = {}): Promise<void> => {
+    setSteps();
+
     if (currentAnimations.length) {
       currentAnimations.map((a) => a.finish());
     }
@@ -256,12 +267,11 @@ function Steppp(element: HTMLElement, options: any = defaultOptions): Instance {
     });
   });
 
+  setSteps();
+
   const animationFrames: FrameDef = computeAnimationFrames(options.frames);
 
   let currentAnimations: Animation[] = [];
-  const currentStepHeight = getHeight(getStep());
-
-  let currentWrapperHeight = currentStepHeight;
 
   heightObserver.observe(getStep());
 
