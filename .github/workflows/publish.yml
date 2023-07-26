@@ -25,7 +25,6 @@ jobs:
           git config user.email "opensource@ramseysolutions.com"
       - name: "Build & Publish Package"
         run: |
-          yarn install
-          yarn install-all
-          yarn build
-          yarn run lerna publish from-package --yes
+          npm run install-all
+          npm run build
+          npx lerna publish from-package --yes
