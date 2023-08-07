@@ -11,16 +11,16 @@ interface ProviderProps {
 
 const baseCss = `
     [data-steppp-wrapper] {
-        position: relative;
-        overflow: hidden;
+      position: relative;
+      overflow: hidden;
     }
 
-    [data-steppp-active] {
-        display: block;
+    [data-steppp-name] {
+      display: none;
     }
 
-    section {
-        display: none;
+    [data-steppp-name][data-steppp-active] {
+      display: block;
     }
 `;
 
@@ -38,6 +38,7 @@ export function Provider({ children, options = {}, ...rest }: ProviderProps) {
 
   return (
     <StepppContext.Provider value={stepppInstance || stubbedMethods}>
+      
       <style>{baseCss}</style>
 
       <div ref={stepRef} {...rest}>

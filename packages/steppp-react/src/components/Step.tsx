@@ -1,6 +1,6 @@
 interface StepProps {
   initialActive?: boolean;
-  name?: string;
+  name: string;
   children: JSX.Element[] | JSX.Element | (string | JSX.Element)[] | string;
 }
 

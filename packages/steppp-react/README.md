@@ -8,7 +8,7 @@ Run `yarn add @ramseyinhouse/steppp-react` or `npm install @ramseyinhouse/steppp
 
 ## Usage
 
-Import the `Provider`, `Wrapper`, and `Step` components from `@ramseyinhouse/steppp-react`. The `Provider` requires a child as a function that will provide methods for navigating through the experience. One of the steps _must_ have a `initialActive` prop on it.
+Import the `Provider`, `Wrapper`, and `Step` components from `@ramseyinhouse/steppp-react`. The `Provider` requires a child as a function that will provide methods for navigating through the experience. One of the steps _must_ have a `initialActive` prop on it, and _all_ steps must have a `name` prop.
 
 ```tsx
 import { Provider, Wrapper, Step } from "@ramseyinhouse/steppp-react";
@@ -19,9 +19,11 @@ function App() {
       {({ moveTo, forward, backward }) => (
         <>
           <Wrapper>
-            <Step initialActive>one</Step>
-            <Step>two</Step>
-            <Step>three</Step>
+            <Step initialActive name="start">
+              one
+            </Step>
+            <Step name="second">two</Step>
+            <Step name="third">three</Step>
           </Wrapper>
 
           <button onClick={forward}>Forward</button>
