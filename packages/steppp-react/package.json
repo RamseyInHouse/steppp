@@ -1,6 +1,6 @@
 {
   "name": "@ramseyinhouse/steppp-react",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "license": "GPL-3.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -33,7 +33,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@ramseyinhouse/steppp": "^1.1.0",
+    "@ramseyinhouse/steppp": "^1.1.1",
     "react": "18.2.0",
     "react-dom": "18.2.0"
   }
