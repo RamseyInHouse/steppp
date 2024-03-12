@@ -245,25 +245,28 @@ function Steppp(element: HTMLElement, options: any = defaultOptions): Instance {
   };
 
   const heightObserver = new ResizeObserver((entries) => {
-    const entry = entries[0];
-
-    if (!entry) return;
-
-    const oldHeight = currentWrapperHeight;
-    const { height: newHeight } = entry.contentRect;
-
-    calculateWrapperHeight(entry.target as HTMLElement, newHeight);
-
-    animate({
-      frames: [
-        {
-          height: `${oldHeight}px`,
-        },
-        {
-          height: `${newHeight}px`,
-        },
-      ],
-      targetElement: stepWrapper,
+    // Avoid Firefox issues.
+    requestAnimationFrame(() => {
+      const entry = entries[0];
+  
+      if (!entry) return;
+  
+      const oldHeight = currentWrapperHeight;
+      const { height: newHeight } = entry.contentRect;
+  
+      calculateWrapperHeight(entry.target as HTMLElement, newHeight);
+  
+      animate({
+        frames: [
+          {
+            height: `${oldHeight}px`,
+          },
+          {
+            height: `${newHeight}px`,
+          },
+        ],
+        targetElement: stepWrapper,
+      });
     });
   });
 
