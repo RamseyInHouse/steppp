@@ -1,6 +1,6 @@
 {
   "name": "@ramseyinhouse/steppp-react",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "license": "GPL-3.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -14,13 +14,20 @@
     "test": "vitest run",
     "format": "prettier --write \"**/*.{js,ts,css,md,json}\""
   },
+  "peerDependencies": {
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
+  },
   "devDependencies": {
     "@testing-library/react": "14.0.0",
     "@types/react": "18.2.18",
     "@types/react-dom": "18.2.7",
+    "@vitejs/plugin-react": "^4.3.4",
     "jsdom": "22.1.0",
     "lint-staged": ">=13.2.3",
     "prettier": "3.0.1",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
     "terser": "5.19.2",
     "typescript": "^5.1.6",
     "vite": "^4.4.9",
@@ -33,8 +40,6 @@
     "access": "public"
   },
   "dependencies": {
-    "@ramseyinhouse/steppp": "^1.1.1",
-    "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "@ramseyinhouse/steppp": "^1.1.1"
   }
 }
